@@ -122,7 +122,12 @@ function startCountdown(){{
   ticker=setInterval(function(){{
     timeLeft--;
     setTimer(timeLeft, timeLeft<=1, false);
-    if(timeLeft<=0){{ clearInterval(ticker); doNextRound(); }}
+    if(timeLeft<=0){{
+      clearInterval(ticker);
+      holding=true;
+      setTimer("HOLD",false,true);
+      setTimeout(function(){{ if(!gameOver) doNextRound(); }},1000);
+    }}
   }},1000);
 }}
 
