@@ -175,7 +175,6 @@ document.getElementById("wrap").onclick=function(){{
   if(phase==="blank"){{
     startCircle.style.opacity=1;
     panel.textContent="tap to start";
-    correctWord.style.opacity=1;
     phase="green";
     return;
   }}
