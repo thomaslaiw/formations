@@ -1,4 +1,4 @@
-import json, random
+import json, random, base64
 
 with open('C:/Users/user/hermes_output/layers_b64.json') as f:
     layers = json.load(f)
@@ -6,6 +6,9 @@ with open('C:/Users/user/hermes_output/layers_b64.json') as f:
 order = list(range(1, len(layers)))  # skip layer 0 (all-shapes)
 random.shuffle(order)
 flips = [(i % 3 == 2) for i in range(len(order))]  # flip x-axis every 3rd map
+
+with open('C:/Users/user/hermes_output/next.wav', 'rb') as f:
+    next_wav_b64 = base64.b64encode(f.read()).decode('ascii')
 
 html = f'''<!DOCTYPE html>
 <html lang="en">
@@ -68,6 +71,7 @@ body{{background:#1a1a1a;overflow:hidden;touch-action:manipulation;font-family:'
 </style>
 </head>
 <body>
+<audio id="nextSnd" src="data:audio/wav;base64,{next_wav_b64}" preload="auto"></audio>
 <div id="wrap">
   <div id="board">
     <img id="img" src="" alt="board">
@@ -117,11 +121,18 @@ function show(i){{
   img.style.transform=FLIPS[i]?'scaleX(-1)':'';
 }}
 
+var nextSnd=document.getElementById("nextSnd");
+function playNext(){{
+  nextSnd.currentTime=0;
+  nextSnd.play();
+}}
+
 function doNextRound(){{
   if(gameOver)return;
   round++;
   updatePanel();
   show(round%IMGS.length);
+  playNext();
   timeLeft=8; setTimer(8,false,false);
   holding=false;
   startCountdown();
@@ -149,6 +160,7 @@ document.getElementById("wrap").onclick=function(){{
   if(phase==="red"){{
     redCircle.style.opacity=0;
     panel.textContent="";
+    playNext();
     phase="blank";
     return;
   }}
