@@ -125,19 +125,7 @@ function startCountdown(){{
     if(timeLeft<=0){{
       clearInterval(ticker);
       holding=true;
-      correctWord.style.opacity=0;
-      round++;
-      updatePanel();
-      show(round%IMGS.length);
-      setTimer("HOLD",false,true);
-      playNext();
-      setTimeout(function(){{
-        if(!gameOver){{
-          timeLeft=8; setTimer(8,false,false);
-          holding=false;
-          startCountdown();
-        }}
-      }},1000);
+      advanceWithHold();
     }}
   }},1000);
 }}
@@ -170,6 +158,22 @@ function doNextRound(){{
   holding=false;
   startCountdown();
 }}
+
+function advanceWithHold(){{
+  correctWord.style.opacity=0;
+  round++;
+  updatePanel();
+  show(round%IMGS.length);
+  setTimer("HOLD",false,true);
+  playNext();
+  setTimeout(function(){{
+    if(!gameOver){{
+      timeLeft=8; setTimer(8,false,false);
+      holding=false;
+      startCountdown();
+    }}
+  }},1000);
+}}
 function updatePanel(){{ panel.textContent="mark: "+marks+"/8"; }}
 function ownerTap(){{
   if(holding)return;
@@ -187,7 +191,7 @@ function ownerTap(){{
   setTimer("HOLD",false,true);
   correctWord.style.opacity=1;
   playSuccess();
-  setTimeout(function(){{ if(!gameOver) doNextRound(); }},1000);
+  setTimeout(function(){{ if(!gameOver) advanceWithHold(); }},1000);
 }}
 
 document.getElementById("wrap").onclick=function(){{
