@@ -172,7 +172,7 @@ function advanceWithHold(){{
       holding=false;
       startCountdown();
     }}
-  }},1000);
+  }},2500);
 }}
 function updatePanel(){{ panel.textContent="mark: "+marks+"/8"; }}
 function ownerTap(){{
