@@ -122,7 +122,13 @@ function startCountdown(){{
   ticker=setInterval(function(){{
     timeLeft--;
     setTimer(timeLeft, timeLeft<=1, false);
-    if(timeLeft<=0){{ clearInterval(ticker); doNextRound(); }}
+    if(timeLeft<=0){{
+      clearInterval(ticker);
+      holding=true;
+      setTimer("HOLD",false,true);
+      playNext();
+      setTimeout(function(){{ if(!gameOver) doNextRound(true); }},1000);
+    }}
   }},1000);
 }}
 
@@ -143,13 +149,13 @@ function playSuccess(){{
   successSnd.play();
 }}
 
-function doNextRound(){{
+function doNextRound(skipSound){{
   if(gameOver)return;
   correctWord.style.opacity=0;
   round++;
   updatePanel();
   show(round%IMGS.length);
-  playNext();
+  if(!skipSound) playNext();
   timeLeft=8; setTimer(8,false,false);
   holding=false;
   startCountdown();
