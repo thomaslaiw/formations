@@ -53,6 +53,10 @@ body{{background:#1a1a1a;overflow:hidden;touch-action:manipulation;font-family:'
   background:radial-gradient(circle at 35% 30%, #ff8 0%, #ee0 30%, #ca0 60%, #880 100%);
   color:#fff; text-shadow:0 2px 4px rgba(0,0,0,.4);
 }}
+#correctWord{{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:35;
+  font-size:clamp(60px, 16vw, 150px);font-weight:900;white-space:nowrap;
+  color:#ff69b4;-webkit-text-stroke:5px #e60000;
+  letter-spacing:2px;opacity:0;transition:opacity .18s;pointer-events:none}}
 
 /* Clear decorations */
 #clearDeco{{position:absolute;top:0;left:0;right:0;bottom:0;z-index:29;pointer-events:none;opacity:0}}
@@ -87,6 +91,7 @@ body{{background:#1a1a1a;overflow:hidden;touch-action:manipulation;font-family:'
     <div class="bigcircle" id="redCircle">TUTORIAL</div>
     <div class="bigcircle" id="startCircle">START</div>
     <div class="bigcircle" id="clearCircle">CLEAR</div>
+    <div id="correctWord">correct</div>
   </div>
 </div>
 <script>
@@ -100,6 +105,7 @@ var redCircle=document.getElementById("redCircle");
 var startCircle=document.getElementById("startCircle");
 var clearCircle=document.getElementById("clearCircle");
 var clearDeco=document.getElementById("clearDeco");
+var correctWord=document.getElementById("correctWord");
 
 function setTimer(t,urgent,hold){{
   timerL.textContent=t; timerR.textContent=t;
@@ -129,6 +135,7 @@ function playNext(){{
 
 function doNextRound(){{
   if(gameOver)return;
+  correctWord.style.opacity=0;
   round++;
   updatePanel();
   show(round%IMGS.length);
@@ -152,6 +159,7 @@ function ownerTap(){{
     return;
   }}
   setTimer("HOLD",false,true);
+  correctWord.style.opacity=1;
   setTimeout(function(){{ if(!gameOver) doNextRound(); }},1000);
 }}
 
