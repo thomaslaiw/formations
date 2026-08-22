@@ -5,7 +5,7 @@ with open('C:/Users/user/hermes_output/layers_b64.json') as f:
 
 order = list(range(1, len(layers)))  # skip layer 0 (all-shapes)
 random.shuffle(order)
-flips = [random.choice([True, False]) for _ in order]  # random x-axis mirror per map
+flips = [(i % 3 == 2) for i in range(len(order))]  # flip x-axis every 3rd map
 
 html = f'''<!DOCTYPE html>
 <html lang="en">
