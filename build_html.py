@@ -10,6 +10,9 @@ flips = [(i % 3 == 2) for i in range(len(order))]  # flip x-axis every 3rd map
 with open('C:/Users/user/hermes_output/next.wav', 'rb') as f:
     next_wav_b64 = base64.b64encode(f.read()).decode('ascii')
 
+with open('C:/Users/user/hermes_output/success.wav', 'rb') as f:
+    success_wav_b64 = base64.b64encode(f.read()).decode('ascii')
+
 html = f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -76,6 +79,7 @@ body{{background:#1a1a1a;overflow:hidden;touch-action:manipulation;font-family:'
 </head>
 <body>
 <audio id="nextSnd" src="data:audio/wav;base64,{next_wav_b64}" preload="auto"></audio>
+<audio id="successSnd" src="data:audio/wav;base64,{success_wav_b64}" preload="auto"></audio>
 <div id="wrap">
   <div id="board">
     <img id="img" src="" alt="board">
@@ -133,6 +137,12 @@ function playNext(){{
   nextSnd.play();
 }}
 
+var successSnd=document.getElementById("successSnd");
+function playSuccess(){{
+  successSnd.currentTime=0;
+  successSnd.play();
+}}
+
 function doNextRound(){{
   if(gameOver)return;
   correctWord.style.opacity=0;
@@ -160,6 +170,7 @@ function ownerTap(){{
   }}
   setTimer("HOLD",false,true);
   correctWord.style.opacity=1;
+  playSuccess();
   setTimeout(function(){{ if(!gameOver) doNextRound(); }},1000);
 }}
 
@@ -176,6 +187,7 @@ document.getElementById("wrap").onclick=function(){{
   if(phase==="blank"){{
     panel.textContent="tap to start";
     correctWord.style.opacity=1;
+    playSuccess();
     phase="waiting";
     setTimeout(function(){{
       correctWord.style.opacity=0;
