@@ -5,6 +5,7 @@ with open('C:/Users/user/hermes_output/layers_b64.json') as f:
 
 order = list(range(1, len(layers)))  # skip layer 0 (all-shapes)
 random.shuffle(order)
+flips = [random.choice([True, False]) for _ in order]  # random x-axis mirror per map
 
 html = f'''<!DOCTYPE html>
 <html lang="en">
@@ -86,6 +87,7 @@ body{{background:#1a1a1a;overflow:hidden;touch-action:manipulation;font-family:'
 </div>
 <script>
 var IMGS = {json.dumps([f"data:image/jpeg;base64,{layers[i]}" for i in order])};
+var FLIPS = {json.dumps(flips)};
 var round=0, timeLeft=8, marks=0, gameOver=false, started=false, holding=false, ticker=null;
 var phase="red"; // red → blank → green → game → clear
 var img=document.getElementById("img"), panel=document.getElementById("panel");
@@ -110,11 +112,16 @@ function startCountdown(){{
   }},1000);
 }}
 
+function show(i){{
+  img.src=IMGS[i];
+  img.style.transform=FLIPS[i]?'scaleX(-1)':'';
+}}
+
 function doNextRound(){{
   if(gameOver)return;
   round++;
   updatePanel();
-  img.src=IMGS[round%IMGS.length];
+  show(round%IMGS.length);
   timeLeft=8; setTimer(8,false,false);
   holding=false;
   startCountdown();
@@ -167,7 +174,7 @@ document.getElementById("wrap").onclick=function(){{
     clearDeco.style.opacity=0;
     redCircle.style.opacity=1;
     panel.textContent=""; setTimer(8,false,false);
-    img.src=IMGS[0];
+    show(0);
     phase="red";
     return;
   }}
@@ -183,7 +190,7 @@ document.getElementById("wrap").onclick=function(){{
   ownerTap();
 }};
 
-img.src=IMGS[0]; setTimer(8,false,false);
+show(0); setTimer(8,false,false);
 redCircle.style.opacity=1; panel.textContent="";
 </script>
 </body>
