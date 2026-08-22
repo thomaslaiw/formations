@@ -125,6 +125,7 @@ function startCountdown(){{
     if(timeLeft<=0){{
       clearInterval(ticker);
       holding=true;
+      correctWord.style.opacity=0;
       round++;
       updatePanel();
       show(round%IMGS.length);
