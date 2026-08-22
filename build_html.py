@@ -125,9 +125,18 @@ function startCountdown(){{
     if(timeLeft<=0){{
       clearInterval(ticker);
       holding=true;
+      round++;
+      updatePanel();
+      show(round%IMGS.length);
       setTimer("HOLD",false,true);
       playNext();
-      setTimeout(function(){{ if(!gameOver) doNextRound(true); }},1000);
+      setTimeout(function(){{
+        if(!gameOver){{
+          timeLeft=8; setTimer(8,false,false);
+          holding=false;
+          startCountdown();
+        }}
+      }},1000);
     }}
   }},1000);
 }}
@@ -149,13 +158,13 @@ function playSuccess(){{
   successSnd.play();
 }}
 
-function doNextRound(skipSound){{
+function doNextRound(){{
   if(gameOver)return;
   correctWord.style.opacity=0;
   round++;
   updatePanel();
   show(round%IMGS.length);
-  if(!skipSound) playNext();
+  playNext();
   timeLeft=8; setTimer(8,false,false);
   holding=false;
   startCountdown();
