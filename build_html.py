@@ -54,7 +54,7 @@ body{{background:#1a1a1a;overflow:hidden;touch-action:manipulation;font-family:'
   color:#fff; text-shadow:0 2px 4px rgba(0,0,0,.4);
 }}
 #correctWord{{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:35;
-  font-size:clamp(60px, 16vw, 150px);font-weight:900;white-space:nowrap;
+  font-size:clamp(90px, 24vw, 225px);font-weight:900;white-space:nowrap;
   color:#ff69b4;-webkit-text-stroke:5px #e60000;
   letter-spacing:2px;opacity:0;transition:opacity .18s;pointer-events:none}}
 
