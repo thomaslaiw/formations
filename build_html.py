@@ -172,10 +172,16 @@ document.getElementById("wrap").onclick=function(){{
     phase="blank";
     return;
   }}
+  if(phase==="waiting"){{ return; }}
   if(phase==="blank"){{
-    startCircle.style.opacity=1;
     panel.textContent="tap to start";
-    phase="green";
+    correctWord.style.opacity=1;
+    phase="waiting";
+    setTimeout(function(){{
+      correctWord.style.opacity=0;
+      startCircle.style.opacity=1;
+      phase="green";
+    }},1000);
     return;
   }}
   if(phase==="green"){{
