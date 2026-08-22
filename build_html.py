@@ -77,8 +77,8 @@ body{{background:#1a1a1a;overflow:hidden;touch-action:manipulation;font-family:'
     </div>
 
     <div id="panel">tap to start</div>
-    <div class="timer" id="timerL">5</div>
-    <div class="timer" id="timerR">5</div>
+    <div class="timer" id="timerL">8</div>
+    <div class="timer" id="timerR">8</div>
     <div class="bigcircle" id="redCircle">TUTORIAL</div>
     <div class="bigcircle" id="startCircle">START</div>
     <div class="bigcircle" id="clearCircle">CLEAR</div>
@@ -86,7 +86,7 @@ body{{background:#1a1a1a;overflow:hidden;touch-action:manipulation;font-family:'
 </div>
 <script>
 var IMGS = {json.dumps([f"data:image/jpeg;base64,{layers[i]}" for i in order])};
-var round=0, timeLeft=5, marks=0, gameOver=false, started=false, holding=false, ticker=null;
+var round=0, timeLeft=8, marks=0, gameOver=false, started=false, holding=false, ticker=null;
 var phase="red"; // red → blank → green → game → clear
 var img=document.getElementById("img"), panel=document.getElementById("panel");
 var timerL=document.getElementById("timerL"), timerR=document.getElementById("timerR");
@@ -115,7 +115,7 @@ function doNextRound(){{
   round++;
   updatePanel();
   img.src=IMGS[round%IMGS.length];
-  timeLeft=5; setTimer(5,false,false);
+  timeLeft=8; setTimer(8,false,false);
   holding=false;
   startCountdown();
 }}
@@ -166,7 +166,7 @@ document.getElementById("wrap").onclick=function(){{
     clearCircle.style.opacity=0;
     clearDeco.style.opacity=0;
     redCircle.style.opacity=1;
-    panel.textContent=""; setTimer(5,false,false);
+    panel.textContent=""; setTimer(8,false,false);
     img.src=IMGS[0];
     phase="red";
     return;
@@ -183,7 +183,7 @@ document.getElementById("wrap").onclick=function(){{
   ownerTap();
 }};
 
-img.src=IMGS[0]; setTimer(5,false,false);
+img.src=IMGS[0]; setTimer(8,false,false);
 redCircle.style.opacity=1; panel.textContent="";
 </script>
 </body>
